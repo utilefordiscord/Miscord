@@ -1,0 +1,11 @@
+{
+  "name": "Miscord",
+  "version": "1.0.0",
+  "description": "The revolutionary music bot for Discord is here",
+  "main": "src/main.py",
+  "scripts": {
+    "start": "python3 src/main.py",
+  },
+  "author": "Utile Developers Team",
+  "license": "AGPL-3.0"
+}
