@@ -1,7 +1,10 @@
 <img align="center" src="https://ialex11.github.io/assets/miscord-logo.png" />
 <h3 align="center">The revolutionary music bot for Discord is here</h1>
+<div align="center">
+[![projectVersion](https://img.shields.io/badge/-v1.0-9cf.svg)](https://utileForDiscord.github.io/miscord/latest)
+[![discordPyVersion](https://img.shields.io/badge/discord.py-0.16.12-9EA6F9.svg?logo=discord&logoColor=white&link=https://github.com/Rapptz/discord.py&link=https://utileForDiscord.github.io/miscord/docs/libs#discord)
+</div>
 <br>
-
 ## Why Miscord?
 Miscord is a project by the [Utile Developers Team](https://github.com/orgs/utilefordiscord/teams/developers/members) for the **Discord Hack Week**, which lasted from June 24 to June 28, 2019.
 
