@@ -2,3 +2,7 @@
 	path = drumbot-implementation
 	url = https://github.com/utilefordiscord/drumbot-implementation
 	branch = master
+[submodule "discord-leveling-py"]
+	path = discord-leveling-py
+	url = https://github.com/utilefordiscord/discord-leveling-py.git
+	branch = master
