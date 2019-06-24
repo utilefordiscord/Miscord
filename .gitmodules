@@ -1,0 +1,4 @@
+[submodule "drumbot-implementation"]
+	path = drumbot-implementation
+	url = https://github.com/utilefordiscord/drumbot-implementation
+	branch = master
