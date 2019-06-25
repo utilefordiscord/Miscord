@@ -2,7 +2,7 @@
 <h3 align="center">The revolutionary music bot for Discord is here</h1>
 <div align="center">
 
-![projectVersion](https://img.shields.io/badge/-v1.0-9cf.svg?link=https://utileForDiscord.github.io/miscord/latest) ![discordPyVersion](https://img.shields.io/badge/discord.py-0.16.12-9EA6F9.svg?logo=discord&logoColor=white&link=https://github.com/Rapptz/discord.py&link=https://utileForDiscord.github.io/miscord/docs/libs#discord)
+![projectVersion](https://img.shields.io/badge/-v1.0-9cf.svg?link=https://utileForDiscord.github.io/miscord/latest) ![discordPyVersion](https://img.shields.io/badge/discord.py-1.2.2-9EA6F9.svg?logo=discord&logoColor=white&link=https://github.com/Rapptz/discord.py&link=https://utileForDiscord.github.io/miscord/docs/libs#discord)
 
 </div>
 
