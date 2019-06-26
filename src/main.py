@@ -46,6 +46,12 @@ async def ping(ctx):
     await ctx.send("Response Time: " + str(round(bot.latency,2)) + " seconds")
 
 @bot.command(pass_context=True)
+async def nitro(ctx):
+	await ctx.send("Want discord nitro? You should, there are tons of benefits!")
+	time.sleep(3)
+	await ctx.send("https://discordapp.com/nitro")
+
+@bot.command(pass_context=True)
 async def lyrics(ctx, song_name, song_author):
     #artist = genius.search_artist(song_author, max_songs=1, sort="title")
     song = genius.search_song(song_name, song_author)
