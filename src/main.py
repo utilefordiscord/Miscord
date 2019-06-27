@@ -279,13 +279,13 @@ async def searchsong(ctx, song_name, song_author):
         await ctx.send("Do you think this might be our problem? Report it using the `!feedback` command.")
 
 @bot.command()
-async def kick(ctx, member: discord.Member, reason):
-    await bot.kick(user)
+async def kick(ctx, member: discord.Member, reason: str='No reason supplied'):
+    await member.kick(reason=reason)
     await ctx.send(":no_entry_sign: **{}** kicked **{}**. Reason: {}.".format(ctx.message.author, member, reason))
 
 @bot.command()
-async def ban(ctx, member: discord.Member, reason):
-    await bot.ban(ban)
+async def ban(ctx, member: discord.Member, reason: str='No reason supplied'):
+    await member.ban(reason=reason)
     await ctx.send(":no_entry_sign: **{}** banned **{}**. Reason: {}.".format(ctx.message.author, member, reason))
 
 # __________________________________________________________________________________________________________________________________________#
