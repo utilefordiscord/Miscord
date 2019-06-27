@@ -47,9 +47,9 @@ async def ping(ctx):
 
 @bot.command(pass_context=True)
 async def nitro(ctx):
-	await ctx.send("Want discord nitro? You should, there are tons of benefits!")
-	time.sleep(3)
-	await ctx.send("https://discordapp.com/nitro")
+	await ctx.send("Are you on the fence about Nitro? Try it. There's many benefits.")
+	asyncio.sleep(3)
+	await ctx.send("👉 <https://discordapp.com/nitro>")
 
 @bot.command(pass_context=True)
 async def lyrics(ctx, song_name, song_author):
