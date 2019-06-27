@@ -1,12 +1,14 @@
 import discord
 from discord import opus
 from discord.ext import commands
+from discord.ext.tasks import loop
 import lyricsgenius
 import json
 import youtube_dl
 import asyncio
+import time
 
-prefix = "!"
+prefix = "m!"
 players = {}
 
 OPUS_LIBS = ['libopus-0.x86.dll', 'libopus-0.x64.dll', 'libopus-0.dll', 'libopus.so.0', 'libopus.0.dylib']
@@ -32,6 +34,8 @@ bot = commands.Bot(command_prefix= prefix)
 genius = lyricsgenius.Genius(str(tokensjson["genius_login_token"]))
 
 bot.queue_list = []
+bot.voiceclient_pause = False
+bot.joinvoice_text_channel = None
 
 @bot.event
 async def on_ready():
@@ -56,12 +60,29 @@ async def nitro(ctx):
 async def lyrics(ctx, song_name, song_author):
     song = genius.search_song(song_name, song_author)
     lyrics = song.lyrics
-    messagelength = int(len(lyrics)/2000)
+    actuallength = len(lyrics)
+    messagelength = int(len(lyrics)/1000)
 
-    i = 0
-    while i < (messagelength + 1):
-        await ctx.send(lyrics[i*2000: (i+1)*2000])
-        i+=1
+    em = discord.Embed(title="{} by {} was released on {}".format(song.title, song.artist, song.year))
+    em.set_thumbnail(url=song.song_art_image_url)
+    em.set_footer(text="Utile Team 2019")
+
+    if actuallength < 6000:
+
+        i = 0
+        while i < (messagelength + 1):
+
+        #await ctx.send(lyrics[i*2000: (i+1)*2000])
+            em.add_field(name="-", value=lyrics[i*1000: (i+1)*1000])
+            i+=1
+        await ctx.send(embed=em)
+    
+    else:
+
+        i = 0
+        while i < (messagelength + 1):
+            await ctx.send(lyrics[i*2000: (i+1)*2000])
+            i+=1
 
 @lyrics.error
 async def clear_error(ctx, error):
@@ -108,13 +129,13 @@ class YTDLSource(discord.PCMVolumeTransformer):
     @classmethod
     async def from_url(cls, url, *, loop=None, stream=False):
         loop = loop or asyncio.get_event_loop()
-        data = await loop.run_in_executor(None, lambda: ytdl.extract_info(url, download=not stream))
+        data = await loop.run_in_executor(None, lambda: ytdl.extract_info(url, download= stream))
 
         if 'entries' in data:
             # take first item from a playlist
             data = data['entries'][0]
 
-        filename = data['url'] if stream else ytdl.prepare_filename(data)
+        filename = data['url']
         return cls(discord.FFmpegPCMAudio(filename, **ffmpeg_options), data=data)
 
 bot.voiceclient = None
@@ -133,6 +154,26 @@ async def play(ctx, *, url):
     em = discord.Embed(title="Miscord is now playing:", description="{}".format(player.title), color= 0x2a988d)
     em.set_footer(text="Utile Team 2019")
     await ctx.send(embed=em)
+    bot.joinvoice_text_channel = ctx.message.channel
+
+@loop(seconds=1)
+async def update_queue():
+    if bot.voiceclient != None:
+        if bot.voiceclient.is_playing() == False:
+            if bot.voiceclient_pause == False:
+
+                del bot.queue_list[0]
+
+                if (len(bot.queue_list) == 0):
+                    await bot.voiceclient.disconnect()
+                    bot.voiceclient = None
+                    em = discord.Embed(title="No videos left in queue. Miscord has left the voice channel.", color= 0x2a988d)
+                    em.set_footer(text="Utile Team 2019")
+                    await bot.joinvoice_text_channel.send(embed=em)
+        
+                else:
+                    player = await YTDLSource.from_url(bot.queue_list[0], loop=bot.loop)
+                    bot.voiceclient.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
 
 @bot.command(pass_context=True)
 async def stop(ctx):
@@ -170,4 +211,24 @@ async def remove(ctx, *, number:int):
     em.set_footer(text="Utile Team 2019")
     await ctx.send(embed=em)
 
+@bot.command(pass_context=True)
+async def pause(ctx):
+    if bot.voiceclient != None:
+        bot.voiceclient_pause = True
+        bot.voiceclient.pause()
+    else:
+        em = discord.Embed(title="Miscord isn't in a voice channel!", color=0x2a988d)
+        await ctx.send(embed=em)
+
+@bot.command(pass_context=True)
+async def resume(ctx):
+    if bot.voiceclient != None:
+        bot.voiceclient.resume()
+        bot.voiceclient_pause = False
+    else:
+        em = discord.Embed(title="Miscord isn't in a voice channel!", color=0x2a988d)
+        em.set_footer(text="Utile Team 2019")
+        await ctx.send(embed=em)
+
+update_queue.start()
 bot.run(tokensjson["discord_bot_token"])
