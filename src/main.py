@@ -27,8 +27,10 @@ bot = commands.Bot(command_prefix= prefix)
 genius = lyricsgenius.Genius(str(tokensjson["genius_login_token"]))
 
 bot.queue_list = []
+bot.queue_titles
 bot.voiceclient_pause = False
 bot.joinvoice_text_channel = None
+bot.lyrics_message_ids = []
 
 youtube_dl.utils.bug_reports_message = lambda: ''
 
