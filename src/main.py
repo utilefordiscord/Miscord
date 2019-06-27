@@ -31,29 +31,29 @@ with open('hackweek/tokens.json') as f:
 bot = commands.Bot(command_prefix= prefix)
 genius = lyricsgenius.Genius(str(tokensjson["genius_login_token"]))
 
+bot.queue_list = []
+
 @bot.event
 async def on_ready():
     print("Bot running with:")
     print("User ID: " + str(bot.user.id))
     print("User Name: " + str(bot.user.name))
 
-#@bot.event
-#async def on_message(message):
-#    await bot.process_commands(message)
-
 @bot.command(pass_context=True)
 async def ping(ctx):
-    await ctx.send("Response Time: " + str(round(bot.latency,2)) + " seconds")
+    em = discord.Embed(title="Response Time: " + str(round(bot.latency,5) * 1000) + " ms", description="", color= 0x2a988d)
+    em.set_footer(text="Utile Team 2019")
+    await ctx.send(embed=em)
 
 @bot.command(pass_context=True)
 async def nitro(ctx):
-	await ctx.send("Are you on the fence about Nitro? Try it. There's many benefits.")
-	asyncio.sleep(3)
-	await ctx.send("👉 <https://discordapp.com/nitro>")
+    em = discord.Embed(title="Are you on the fence about Nitro? Try it. There's many benefits.", color= 0x2a988d)
+    em.add_field(name="👉", value="<https://discordapp.com/nitro>")
+    em.set_footer(text="Utile Team 2019")
+    await ctx.send(embed=em)
 
 @bot.command(pass_context=True)
 async def lyrics(ctx, song_name, song_author):
-    #artist = genius.search_artist(song_author, max_songs=1, sort="title")
     song = genius.search_song(song_name, song_author)
     lyrics = song.lyrics
     messagelength = int(len(lyrics)/2000)
@@ -65,8 +65,11 @@ async def lyrics(ctx, song_name, song_author):
 
 @lyrics.error
 async def clear_error(ctx, error):
+
     if isinstance(error, commands.MissingRequiredArgument):
-        await ctx.send("You're missing something! Do {}help {} to see what you're missing!".format(prefix, ctx.command))
+        em = discord.Embed(title="You're missing something!", description="Do {}help {} to see what you're missing!".format(prefix, ctx.command), color= 0x2a988d)
+        em.set_footer(text="Utile Team 2019")
+        await ctx.send(embed=em)
     
     raise error
 
@@ -119,18 +122,52 @@ bot.voiceclient = None
 @bot.command(pass_context=True)
 async def play(ctx, *, url):
     
-        voice_channel = ctx.message.author.voice.channel
+    voice_channel = ctx.message.author.voice.channel
 
-        async with ctx.typing():
-            player = await YTDLSource.from_url(url, loop=bot.loop)
-            bot.voiceclient = await voice_channel.connect(reconnect=True)
-            bot.voiceclient.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
-        await ctx.send('Now playing: {}'.format(player.title))
+    async with ctx.typing():
+        player = await YTDLSource.from_url(url, loop=bot.loop)
+        bot.voiceclient = await voice_channel.connect(reconnect=True)
+        bot.voiceclient.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
+        
+    bot.queue_list.append(url)
+    em = discord.Embed(title="Miscord is now playing:", description="{}".format(player.title), color= 0x2a988d)
+    em.set_footer(text="Utile Team 2019")
+    await ctx.send(embed=em)
 
 @bot.command(pass_context=True)
 async def stop(ctx):
     await bot.voiceclient.disconnect()
-    await ctx.send("Miscord has successfully disconnected from your voice channel!")
+    
+    em = discord.Embed(title="Miscord has succesfully disconnected!", color=0x2a988d)
+    em.set_footer(text="Utile Team 2019")
+    await ctx.send(embed=em)
     bot.voiceclient = None
+    bot.queue_list = []
+
+@bot.command(pass_context=True)
+async def queue(ctx):
+    em = discord.Embed(title="Queue: ", color=0x2a988d)
+    for index, song in enumerate(bot.queue_list):
+        em.add_field(name="Number {}".format(str(index+1)), value=song)
+    
+    em.set_footer(text="Utile Team 2019")
+    await ctx.send(embed=em)
+
+@bot.command(pass_context=True)
+async def add(ctx, *, url):
+    bot.queue_list.append(url)
+    em = discord.Embed(title="Adding to Queue: ", color=0x2a988d)
+    em.add_field(name="URL: ", value="{}".format(url))
+    em.set_footer(text="Utile Team 2019")
+    await ctx.send(embed=em)
+
+@bot.command(pass_context=True)
+async def remove(ctx, *, number:int):
+    deleted_url = bot.queue_list[number-1]
+    del bot.queue_list[number-1]
+    em = discord.Embed(title="Removing from Queue: ", color=0x2a988d)
+    em.add_field(name="URL: ", value="{}".format(deleted_url))
+    em.set_footer(text="Utile Team 2019")
+    await ctx.send(embed=em)
 
 bot.run(tokensjson["discord_bot_token"])
