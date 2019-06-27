@@ -10,14 +10,14 @@ import random
 "Parsing json"
 
 #If you're going to try running this, make sure you create tokens.json with a genius_login_token and discord_bot_token for this to work
-#with open("./package.json") as f:
-#    packageJsonData = json.load(f)
-#    with open(str(packageJsonData["tokens"])) as j:
-#	       tokensjson = json.load(j)
+with open("./package.json") as f:
+    packageJsonData = json.load(f)
+    with open(str(packageJsonData["tokens"])) as j:
+	       tokensjson = json.load(j)
 
 #Commented out for Blue's directory.
-with open('hackweek/tokens.json') as f:
-	tokensjson = json.load(f)
+#with open('hackweek/tokens.json') as f:
+#	tokensjson = json.load(f)
 
 # __________________________________________________________________________________________________________________________________________#
 "Variables"
