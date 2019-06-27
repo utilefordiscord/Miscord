@@ -105,3 +105,9 @@ venv.bak/
 
 #macOS
 .DS_Store
+
+#node_modules
+/node_modules/
+
+#tokens_json
+tokens.json

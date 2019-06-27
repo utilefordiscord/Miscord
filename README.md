@@ -22,6 +22,15 @@ Once done that, the owner of the server will receive a guide from Miscord that w
 To get a full detailed list of all the Miscord commands, go [here](https://utileForDiscord.github.io/miscord/commands).
 
 ## Team
+The awesome **Utile Developers Team** is formed by:
+
+- **Tilda** | <a href="https://github.com/tilda" rel="some text"><img href="example.com" src="https://ialex11.github.io/assets/github.svg" width="16" height="16" title="500px" alt="500px"></a> <a href="https://www.reddit.com/u/RShotZz" rel="some text"><img href="example.com" src="https://ialex11.github.io/assets/reddit.svg" width="16" height="16" title="500px" alt="500px"></a>
+
+- **Semiak** | <a href="https://github.com/iAlex11" rel="some text"><img href="example.com" src="https://ialex11.github.io/assets/github.svg" width="16" height="16" title="500px" alt="500px"></a> <a href="https://www.reddit.com/u/iAlex11" rel="some text"><img href="example.com" src="https://ialex11.github.io/assets/reddit.svg" width="16" height="16" title="500px" alt="500px"></a> <a href="https://twitter.com/semaik_" rel="some text"><img href="example.com" src="https://ialex11.github.io/assets/twitter.svg" width="16" height="16" title="500px" alt="500px"></a>
+
+- **Blue** | <a href="https://github.com/bluecification" rel="some text"><img href="example.com" src="https://ialex11.github.io/assets/github.svg" width="16" height="16" title="500px" alt="500px"></a> <a href="https://www.reddit.com/u/an516" rel="some text"><img href="example.com" src="https://ialex11.github.io/assets/reddit.svg" width="16" height="16" title="500px" alt="500px"></a> <a href="https://twitter.com/bluecantcode" rel="some text"><img href="example.com" src="https://ialex11.github.io/assets/twitter.svg" width="16" height="16" title="500px" alt="500px"></a>
+
+- **SemiColon** | <a href="https://github.com/semiicolon" rel="some text"><img href="example.com" src="https://ialex11.github.io/assets/github.svg" width="16" height="16" title="500px" alt="500px"></a>
 
 ## Contributing
 In the nature of open-source, all types of suggestions are accepted and fully appreciated, just make a pull request or send us a message in the [Support Server](discord.gg/supportserverlinkgoeshere) and we'll try to review it.
@@ -29,6 +38,30 @@ In the nature of open-source, all types of suggestions are accepted and fully ap
 To report a bug go to the [Miscord Public Bug Tracker](bugs.semiak.dev) or make a [new issue](https://github.com/utileForDiscord/miscord/issues).
 
 Alternatively, you can use **Miscord**'s `m!feedback` command.
+
+#### Installing source
+If you want to run your own development version of Miscord, you can achieve that easily.
+
+##### Requirements
+1. Have both **npm** and **Node.js** installed (for discord-leveling API).
+2. Python 3.6 or newer.
+3. Have discord.py 1.2.2 or higher.
+
+##### Getting Started
+Run the following commands:
+```bash
+git clone --recursive https://github.com/utilefordiscord/miscord.git #clones repo and its submodules
+cd Miscord && pip install -r dependencies.txt #accesses folder and installs the dependencies required for Miscord to run
+```
+
+All the Miscord discord.py code is found at the `/src` directory.
+Do all the changes you want, and then use the following command to run it:
+```
+npm start
+```
+
+This will try to parse an instance.json file containing the tokens for the bot to run.
+If there's no file, it'll ask you for the discord bot token and Genius token and then will proceed to generate the file so you don't need to do this again.
 
 ## Disclaimer
 Both Utile and Miscord are made by the [Utile Developers Team](https://github.com/orgs/utilefordiscord/teams/developers/members).      
