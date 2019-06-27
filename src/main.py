@@ -5,15 +5,19 @@ from discord import opus
 from discord.ext import commands
 from discord.ext.tasks import loop
 import lyricsgenius, json, youtube_dl, asyncio, time
-
+import random
 # __________________________________________________________________________________________________________________________________________#
 "Parsing json"
 
-##If you're going to try running this, make sure you create tokens.json with a genius_login_token and discord_bot_token for this to work
+#If you're going to try running this, make sure you create tokens.json with a genius_login_token and discord_bot_token for this to work
 with open("./package.json") as f:
     packageJsonData = json.load(f)
     with open(str(packageJsonData["tokens"])) as j:
 	       tokensjson = json.load(j)
+
+#Commented out for Blue's directory.
+#with open('hackweek/tokens.json') as f:
+#	tokensjson = json.load(f)
 
 # __________________________________________________________________________________________________________________________________________#
 "Variables"
@@ -27,7 +31,7 @@ bot = commands.Bot(command_prefix= prefix)
 genius = lyricsgenius.Genius(str(tokensjson["genius_login_token"]))
 
 bot.queue_list = []
-bot.queue_titles
+bot.queue_titles = []
 bot.voiceclient_pause = False
 bot.joinvoice_text_channel = None
 bot.lyrics_message_ids = []
@@ -92,8 +96,8 @@ async def createRole(ctx, role):
     await guild.create_role(name="{}".format(role))
     await ctx.send("Created role {} successfully!".format(role))
 
-  @bot.command(pass_context=true)
-  async def magic8ball(ctx):
+@bot.command(pass_context=True)
+async def magic8ball(ctx):
     await ctx.send(random.choice([
       "It is certain. :8ball:", "It is decidedly so. :8ball:",
       "Without a doubt. :8ball:", "Yes - definitely. :8ball:", "You may rely on it. :8ball:",
@@ -111,7 +115,7 @@ async def assignRole(ctx, role_name, member: discord.Member):
     await ctx.send("Assigned role {} to {} successfully!".format(role, member))
 
 @bot.command(pass_context=True)
-async def deleteRole(ctx, *,role_name):
+async def delrole(ctx, *,role_name):
   role = discord.utils.get(ctx.message.server.roles, name=role_name)
   if role:
     try:
@@ -121,7 +125,7 @@ async def deleteRole(ctx, *,role_name):
       await ctx.send(":warning: I am missing permissions to delete this role!")
   else:
     await ctx.send("That role doesn't exist!")
-
+    
 @bot.command(pass_context=True)
 async def ping(ctx):
     em = discord.Embed(title="Response Time: " + str(round(bot.latency,2) * 1000) + " ms", description="", color= 0x2a988d)
@@ -165,15 +169,15 @@ bot.voiceclient = None
 
 @bot.command(pass_context=True)
 async def play(ctx, *, url):
-
+    
     voice_channel = ctx.message.author.voice.channel
 
     async with ctx.typing():
         player = await YTDLSource.from_url(url, loop=bot.loop)
         bot.voiceclient = await voice_channel.connect(reconnect=True)
         bot.voiceclient.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
-
-    bot.queue_titles.append(player.title)
+        
+    bot.queue_titles.append(player.title)    
     bot.queue_list.append(url)
     em = discord.Embed(title="Miscord is now playing:", description="{}".format(player.title), color= 0x2a988d)
     em.set_footer(text="Utile Team 2019")
@@ -195,7 +199,7 @@ async def update_queue():
                     em = discord.Embed(title="No videos left in queue. Miscord has left the voice channel.", color= 0x2a988d)
                     em.set_footer(text="Utile Team 2019")
                     await bot.joinvoice_text_channel.send(embed=em)
-
+        
                 else:
                     player = await YTDLSource.from_url(bot.queue_list[0], loop=bot.loop)
                     bot.voiceclient.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
@@ -209,14 +213,6 @@ async def stop(ctx):
     bot.voiceclient = None
     bot.queue_list = []
 
-@bot.command(pass_context=True)
-async def stop(ctx):
-    await bot.voiceclient.disconnect()
-
-    em = discord.Embed(title="Miscord has succesfully disconnected!", color=0x2a988d)
-    await ctx.send(embed=em)
-    bot.voiceclient = None
-    bot.queue_list = []
 
 @bot.command(pass_context=True)
 async def queue(ctx):
@@ -224,7 +220,8 @@ async def queue(ctx):
 
     for index, song in enumerate(bot.queue_list):
         em.add_field(name="{}".format(bot.queue_titles[index]), value=song)
-
+    
+    em.set_footer(text="Utile Team 2019")
     await ctx.send(embed=em)
 
 @bot.command(pass_context=True)
@@ -235,6 +232,7 @@ async def add(ctx, *, url):
 
     em = discord.Embed(title="Adding to Queue: ", color=0x2a988d)
     em.add_field(name="{}".format(player.title), value="{}".format(url))
+    em.set_footer(text="Utile Team 2019")
     await ctx.send(embed=em)
 
 @bot.command(pass_context=True)
@@ -245,6 +243,7 @@ async def remove(ctx, *, number:int):
     del bot.queue_titles[number-1]
     em = discord.Embed(title="Removing from Queue: ", color=0x2a988d)
     em.add_field(name="{}".format(deleted_title), value="{}".format(deleted_url))
+    em.set_footer(text="Utile Team 2019")
     await ctx.send(embed=em)
 
 @bot.command(pass_context=True)
@@ -263,14 +262,15 @@ async def resume(ctx):
         bot.voiceclient_pause = False
     else:
         em = discord.Embed(title="Miscord isn't in a voice channel!", color=0x2a988d)
+        em.set_footer(text="Utile Team 2019")
         await ctx.send(embed=em)
 
 @bot.command(pass_context=True)
 async def skip(ctx):
     em = discord.Embed(title= "{} has been skipped!".format(bot.queue_list[0]), color=0x2a988d)
     bot.voiceclient.stop()
-    await ctx.send(embed=em)
-
+    await ctx.send(embed=em)	
+	
 @bot.command()
 async def feedback(ctx, feedback_message):
     await ctx.message.delete() #removes the message to make the server cleaner
@@ -281,7 +281,7 @@ async def feedback(ctx, feedback_message):
     await feedbackChannel.send("<@&593916238908883002> Message from @{}: {}.".format(ctx.message.author, feedback_message)) #sends the feedback to the feedback channel
     await sender.send(":incoming_envelope: Your feedback has been sent! Thanks for helping us making **Miscord** a better bot.")
     await sender.send("An admin has been notified and will contact you throughout the day, meanwhile, you can join the **Support Server** if you want to continue the discussion.")
-
+	
 @bot.command(pass_context = True)
 async def mute(ctx, member: discord.Member):
     role = discord.utils.get(member.server.roles, name='Muted')
@@ -302,15 +302,6 @@ async def ban(ctx, member: discord.Member, reason: str='No reason supplied'):
 # __________________________________________________________________________________________________________________________________________#
 "Bot errors"
 
-@lyrics.error
-async def clear_error(ctx, error):
-
-    if isinstance(error, commands.MissingRequiredArgument):
-        em = discord.Embed(title="You're missing something!", description="Do {}help {} to see what you're missing!".format(prefix, ctx.command), color= 0x2a988d)
-        await ctx.send(embed=em)
-
-    raise error
-
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
@@ -323,24 +314,9 @@ async def on_command_error(ctx, error):
 
         raise error
 
-@kick.error
-async def clear_error(ctx, error):
-    if isinstance(error, CheckFailure): #returns true when the user doesn't have permissions
-        errMessage = await client.send(ctx.message.channel, "Looks like you don't have the required permissions to kick users.")
-        time.sleep(5)
-        await ctx.message.delete()
-        await errMessage.delete()
 
-@ban.error
-async def clear_error(ctx, error):
-    if isinstance(error, CheckFailure): #returns true when the user doesn't have permissions
-        errMessage = await client.send(ctx.message.channel, "Looks like you don't have the required permissions to ban users.")
-        time.sleep(5)
-        await ctx.message.delete()
-        await errMessage.delete()
-
-@searchsong.error
-async def clear_error(ctx, error):
+@lyrics.error
+async def lyrics_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         errMessage = await ctx.send("You're missing something! Do `{}help {}` to see what you're missing!".format(prefix, ctx.command))
         time.sleep(5)
@@ -348,31 +324,6 @@ async def clear_error(ctx, error):
         await errMessage.delete()
 
     raise error
-
-
-@feedback.error
-async def clear_error(ctx, error):
-    if isinstance(error, commands.MissingRequiredArgument):
-        errMessage = await ctx.send("It's nice you want to help us but it might be useful for us to give information about your problem :p".format(prefix, ctx.command))
-        time.sleep(5)
-        await ctx.message.delete()
-        await errMessage.delete()
-
-    raise error
-
-@mute.error
-async def clear_error(ctx, error):
-    if isinstance(error, commands.MissingRequiredArgument):
-        errMessage = await ctx.send("You're missing something! Do '{}help {}' to see what you're missing!".format(prefix, ctx.command))
-        time.sleep(5)
-        await ctx.message.delete()
-        await errMessage.delete()
-    if isinstance(error, CheckFailure): #returns true when the user doesn't have permissions
-        errMessage = await client.send(ctx.message.channel, "Looks like you don't have the required permissions to mute users.")
-        time.sleep(5)
-        await ctx.message.delete()
-        await errMessage.delete()
-
 # __________________________________________________________________________________________________________________________________________#
 "Classes"
 
