@@ -107,7 +107,7 @@ async def delrole(ctx, *,role_name):
       await ctx.send(":warning: I am missing permissions to delete this role!")
   else:
     await ctx.send("That role doesn't exist!")
-    
+
 @bot.command(pass_context=True)
 async def ping(ctx):
     em = discord.Embed(title="Response Time: " + str(round(bot.latency,2) * 1000) + " ms", description="", color= 0x2a988d)
@@ -314,7 +314,7 @@ async def on_command_error(ctx, error):
 
 @kick.error
 async def clear_error(ctx, error):
-    if isinstance(error, CheckFailure): #returns true when the user doesn't have permissions
+    if isinstance(error, commands.CheckFailure): #returns true when the user doesn't have permissions
         errMessage = await client.send(ctx.message.channel, "Looks like you don't have the required permissions to kick users.")
         time.sleep(5)
         await ctx.message.delete()
@@ -322,7 +322,7 @@ async def clear_error(ctx, error):
 
 @ban.error
 async def clear_error(ctx, error):
-    if isinstance(error, CheckFailure): #returns true when the user doesn't have permissions
+    if isinstance(error, commands.CheckFailure): #returns true when the user doesn't have permissions
         errMessage = await client.send(ctx.message.channel, "Looks like you don't have the required permissions to ban users.")
         time.sleep(5)
         await ctx.message.delete()
