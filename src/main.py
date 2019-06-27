@@ -97,7 +97,7 @@ async def assignRole(ctx, role_name, member: discord.Member):
     await ctx.send("Assigned role {} to {} successfully!".format(role, member))
 
 @bot.command(pass_context=True)
-async def delrole(ctx, *,role_name):
+async def deleteRole(ctx, *,role_name):
   role = discord.utils.get(ctx.message.server.roles, name=role_name)
   if role:
     try:
@@ -107,7 +107,7 @@ async def delrole(ctx, *,role_name):
       await ctx.send(":warning: I am missing permissions to delete this role!")
   else:
     await ctx.send("That role doesn't exist!")
-    
+
 @bot.command(pass_context=True)
 async def ping(ctx):
     em = discord.Embed(title="Response Time: " + str(round(bot.latency,2) * 1000) + " ms", description="", color= 0x2a988d)
@@ -151,15 +151,15 @@ bot.voiceclient = None
 
 @bot.command(pass_context=True)
 async def play(ctx, *, url):
-    
+
     voice_channel = ctx.message.author.voice.channel
 
     async with ctx.typing():
         player = await YTDLSource.from_url(url, loop=bot.loop)
         bot.voiceclient = await voice_channel.connect(reconnect=True)
         bot.voiceclient.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
-        
-    bot.queue_titles.append(player.title)    
+
+    bot.queue_titles.append(player.title)
     bot.queue_list.append(url)
     em = discord.Embed(title="Miscord is now playing:", description="{}".format(player.title), color= 0x2a988d)
     em.set_footer(text="Utile Team 2019")
@@ -181,7 +181,7 @@ async def update_queue():
                     em = discord.Embed(title="No videos left in queue. Miscord has left the voice channel.", color= 0x2a988d)
                     em.set_footer(text="Utile Team 2019")
                     await bot.joinvoice_text_channel.send(embed=em)
-        
+
                 else:
                     player = await YTDLSource.from_url(bot.queue_list[0], loop=bot.loop)
                     bot.voiceclient.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
@@ -198,9 +198,8 @@ async def stop(ctx):
 @bot.command(pass_context=True)
 async def stop(ctx):
     await bot.voiceclient.disconnect()
-    
+
     em = discord.Embed(title="Miscord has succesfully disconnected!", color=0x2a988d)
-    em.set_footer(text="Utile Team 2019")
     await ctx.send(embed=em)
     bot.voiceclient = None
     bot.queue_list = []
@@ -211,8 +210,7 @@ async def queue(ctx):
 
     for index, song in enumerate(bot.queue_list):
         em.add_field(name="{}".format(bot.queue_titles[index]), value=song)
-    
-    em.set_footer(text="Utile Team 2019")
+
     await ctx.send(embed=em)
 
 @bot.command(pass_context=True)
@@ -223,7 +221,6 @@ async def add(ctx, *, url):
 
     em = discord.Embed(title="Adding to Queue: ", color=0x2a988d)
     em.add_field(name="{}".format(player.title), value="{}".format(url))
-    em.set_footer(text="Utile Team 2019")
     await ctx.send(embed=em)
 
 @bot.command(pass_context=True)
@@ -234,7 +231,6 @@ async def remove(ctx, *, number:int):
     del bot.queue_titles[number-1]
     em = discord.Embed(title="Removing from Queue: ", color=0x2a988d)
     em.add_field(name="{}".format(deleted_title), value="{}".format(deleted_url))
-    em.set_footer(text="Utile Team 2019")
     await ctx.send(embed=em)
 
 @bot.command(pass_context=True)
@@ -253,15 +249,14 @@ async def resume(ctx):
         bot.voiceclient_pause = False
     else:
         em = discord.Embed(title="Miscord isn't in a voice channel!", color=0x2a988d)
-        em.set_footer(text="Utile Team 2019")
         await ctx.send(embed=em)
 
 @bot.command(pass_context=True)
 async def skip(ctx):
     em = discord.Embed(title= "{} has been skipped!".format(bot.queue_list[0]), color=0x2a988d)
     bot.voiceclient.stop()
-    await ctx.send(embed=em)	
-	
+    await ctx.send(embed=em)
+
 @bot.command()
 async def feedback(ctx, feedback_message):
     await ctx.message.delete() #removes the message to make the server cleaner
@@ -272,7 +267,7 @@ async def feedback(ctx, feedback_message):
     await feedbackChannel.send("<@&593916238908883002> Message from @{}: {}.".format(ctx.message.author, feedback_message)) #sends the feedback to the feedback channel
     await sender.send(":incoming_envelope: Your feedback has been sent! Thanks for helping us making **Miscord** a better bot.")
     await sender.send("An admin has been notified and will contact you throughout the day, meanwhile, you can join the **Support Server** if you want to continue the discussion.")
-	
+
 @bot.command(pass_context = True)
 async def mute(ctx, member: discord.Member):
     role = discord.utils.get(member.server.roles, name='Muted')
