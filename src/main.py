@@ -10,14 +10,14 @@ import random
 "Parsing json"
 
 #If you're going to try running this, make sure you create tokens.json with a genius_login_token and discord_bot_token for this to work
-with open("./package.json") as f:
-    packageJsonData = json.load(f)
-    with open(str(packageJsonData["tokens"])) as j:
-	       tokensjson = json.load(j)
+#with open("./package.json") as f:
+#    packageJsonData = json.load(f)
+#    with open(str(packageJsonData["tokens"])) as j:
+#	       tokensjson = json.load(j)
 
 #Commented out for Blue's directory.
-#with open('hackweek/tokens.json') as f:
-#	tokensjson = json.load(f)
+with open('hackweek/tokens.json') as f:
+	tokensjson = json.load(f)
 
 # __________________________________________________________________________________________________________________________________________#
 "Variables"
@@ -96,8 +96,8 @@ async def createRole(ctx, role):
     await guild.create_role(name="{}".format(role))
     await ctx.send("Created role {} successfully!".format(role))
 
-@bot.command(pass_context=True)
-async def magic8ball(ctx):
+@bot.command(pass_context=True, aliases=['8ball'])
+async def eightball(ctx):
     await ctx.send(random.choice([
       "It is certain. :8ball:", "It is decidedly so. :8ball:",
       "Without a doubt. :8ball:", "Yes - definitely. :8ball:", "You may rely on it. :8ball:",
