@@ -94,7 +94,7 @@ async def createRole(ctx, role):
 
   @bot.command(pass_context=true)
   async def magic8ball(ctx):
-    await bot.send(random.choice([
+    await ctx.send(random.choice([
       "It is certain. :8ball:", "It is decidedly so. :8ball:",
       "Without a doubt. :8ball:", "Yes - definitely. :8ball:", "You may rely on it. :8ball:",
       "As I see it, yes. :8ball:", "Most likely. :8ball:", "Outlook good. :8ball:",
