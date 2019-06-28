@@ -11,7 +11,7 @@
 ## Why Miscord?
 Miscord is a project by the [Utile Developers Team](https://github.com/orgs/utilefordiscord/teams/developers/members) for the **Discord Hack Week**, which lasted from June 24 to June 28, 2019.
 
-It is a Discord bot made in Python which allows you to create songs using `discord.py`'s internal voice support and a custom implementation of the Github NoopsChallenge's Drumbot API, play songs from the internet, display the lyrics and information of the song (Genius) and more fun and entertaining things like a leveling system for your server.
+It is a Discord bot made in Python which allows you to create songs using `discord.py`'s internal voice support and a custom implementation of the Github NoopsChallenge's Drumbot API, play songs from the internet, display the lyrics and information of the song (Genius) and more fun and entertaining things.
 
 ## Get Started
 Using **Miscord** is a really straight-forward process.
@@ -33,7 +33,7 @@ The awesome **Utile Developers Team** is formed by:
 - **SemiColon** | <a href="https://github.com/semiicolon" rel="some text"><img href="example.com" src="https://ialex11.github.io/assets/github.svg" width="16" height="16" title="500px" alt="500px"></a>
 
 ## Contributing
-In the nature of open-source, all types of suggestions are accepted and fully appreciated, just make a pull request or send us a message in the [Support Server](discord.gg/supportserverlinkgoeshere) and we'll try to review it.
+In the nature of open-source, all types of suggestions are accepted and fully appreciated, just make a pull request or send us a message in the [Support Server](https://discord.gg/KeQ54aU) and we'll try to review it.
 
 To report a bug go to the [Miscord Public Bug Tracker](bugs.semiak.dev) or make a [new issue](https://github.com/utileForDiscord/miscord/issues).
 
