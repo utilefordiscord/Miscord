@@ -6,7 +6,7 @@
   "tokens": "tokens.json",
   "repository": "https://github.com/utilefordiscord/miscord.git",
   "scripts": {
-    "start": "chmod +x src/main.py && ./src/main.py"
+    "start": "node start.js"
   },
   "author": "Utile Developers Team",
   "license": "AGPL-3.0",
