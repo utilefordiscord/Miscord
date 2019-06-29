@@ -266,6 +266,16 @@ async def feedback(ctx, feedback_message):
     await sender.send(":incoming_envelope: Your feedback has been sent! Thanks for helping us making **Miscord** a better bot.")
     await sender.send("An admin has been notified and will contact you throughout the day, meanwhile, you can join the **Support Server** if you want to continue the discussion.")
 
+@bot.command()
+async def feedbackreply(ctx, user_id: int, reply: str):
+    recipient = bot.get_user(user_id)
+    try:
+        embed = discord.Embed(title="Feedback response", description=reply, color=0x21988d)
+        await recipient.send('The Miscord Support Team has responded to your feedback:',
+                             embed=embed)
+    except Exception:
+        return await ctx.send(':warning: I was not able to deliver the reply - DMs are probably ')
+
 @bot.command(pass_context = True)
 async def mute(ctx, member: discord.Member):
     role = discord.utils.get(member.server.roles, name='Muted')
