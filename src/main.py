@@ -177,7 +177,7 @@ async def update_queue():
                 if (len(bot.queue_list) == 0):
                     await bot.voiceclient.disconnect()
                     bot.voiceclient = None
-                    em = discord.Embed(title="No videos left in queue. Miscord has left the voice channel.", color= 0x2a988d)
+                    em = discord.Embed(title="Nothing left in queue. Miscord has left the voice channel.", color= 0x2a988d)
                     await bot.joinvoice_text_channel.send(embed=em)
 
                 else:
@@ -188,16 +188,7 @@ async def update_queue():
 async def stop(ctx):
     await bot.voiceclient.disconnect()
 
-    em = discord.Embed(title="Miscord has succesfully disconnected!", color=0x2a988d)
-    await ctx.send(embed=em)
-    bot.voiceclient = None
-    bot.queue_list = []
-
-@bot.command(pass_context=True)
-async def stop(ctx):
-    await bot.voiceclient.disconnect()
-
-    em = discord.Embed(title="Miscord has succesfully disconnected!", color=0x2a988d)
+    em = discord.Embed(title="Miscord has disconnected from the channel.", color=0x2a988d)
     await ctx.send(embed=em)
     bot.voiceclient = None
     bot.queue_list = []
