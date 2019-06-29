@@ -274,7 +274,8 @@ async def feedbackreply(ctx, user_id: int, reply: str):
         await recipient.send('The Miscord Support Team has responded to your feedback:',
                              embed=embed)
     except Exception:
-        return await ctx.send(':warning: I was not able to deliver the reply - DMs are probably ')
+        return await ctx.send(':no_entry_sign: The user has chosen to block DMs.')
+    await ctx.send(':check: Response sent.')
 
 @bot.command(pass_context = True)
 async def mute(ctx, member: discord.Member):
