@@ -19,7 +19,7 @@ Using **Miscord** is a really straight-forward process.
 Invite Miscord from [this link](https://utileForDiscord.github,io/miscord/invite).<br>
 Once done that, the owner of the server will receive a guide from Miscord that will show how to set up it for the server.
 
-To get a full detailed list of all the Miscord commands, go [here](https://utileForDiscord.github.io/miscord/commands).
+To get a full detailed list of all the Miscord commands, go [here](https://miscord.utile.cf/).
 
 ## Team
 The awesome **Utile Developers Team** is formed by:
