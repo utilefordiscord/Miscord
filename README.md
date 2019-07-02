@@ -68,4 +68,4 @@ Both Utile and Miscord are made by the [Utile Developers Team](https://github.co
 
 Do not distribute or modify this software without permission.
 
-<div align="center"><sup>Copyright @ 2019 <a href="https://github.com/orgs/utilefordiscord/teams/developers/members">Utile Developers Team</a>.</sup></div>
+<div align="center"><sup>All rights reserved, <a href="https://github.com/orgs/utilefordiscord/teams/developers/members">Utile Developers Team</a>.</sup></div>
