@@ -30,7 +30,7 @@ The awesome **Utile Developers Team** is formed by:
 
 - **Blue** | <a href="https://github.com/bluecification" rel="some text"><img href="example.com" src="https://ialex11.github.io/assets/github.svg" width="16" height="16" title="500px" alt="500px"></a> <a href="https://www.reddit.com/u/an516" rel="some text"><img href="example.com" src="https://ialex11.github.io/assets/reddit.svg" width="16" height="16" title="500px" alt="500px"></a> <a href="https://twitter.com/bluecantcode" rel="some text"><img href="example.com" src="https://ialex11.github.io/assets/twitter.svg" width="16" height="16" title="500px" alt="500px"></a>
 
-- **SemiColon** | <a href="https://github.com/semiicolon" rel="some text"><img href="example.com" src="https://ialex11.github.io/assets/github.svg" width="16" height="16" title="500px" alt="500px"></a>
+- **SemiColon** | <a href="https://github.com/semiicolon" rel="some text"><img href="example.com" src="https://ialex11.github.io/assets/github.svg" width="16" height="16" title="500px" alt="500px"></a> <a href="https://www.reddit.com/u/yetanothersemicolon" rel="some text"><img href="example.com" src="https://ialex11.github.io/assets/reddit.svg" width="16" height="16" title="500px" alt="500px"></a>
 
 ## Contributing
 In the nature of open-source, all types of suggestions are accepted and fully appreciated, just make a pull request or send us a message in the [Support Server](https://discord.gg/KeQ54aU) and we'll try to review it.
