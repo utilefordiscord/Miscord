@@ -1,4 +1,4 @@
-<img align="center" src="https://ialex11.github.io/assets/miscord-logo.png" />
+<img align="center" src="https://github.com/utilefordiscord/Miscord/blob/master/brand/logo.png?raw=true" />
 <h3 align="center">The revolutionary music bot for Discord is here</h1>
 <div align="center">
 
